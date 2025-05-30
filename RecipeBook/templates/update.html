@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update Recipe
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Update Recipe</h1>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('update_recipe', post_id=post.id) }}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ post.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients</label>
+            <textarea class="form-control" id="ingredients" name="ingredients" rows="5" required>{{ post.ingredients }}</textarea>
+            <small class="form-text text-muted">Enter each ingredient on a new line.</small>
+        </div>
+        <div class="mb-3">
+            <label for="recipe" class="form-label">Recipe</label>
+            <textarea class="form-control" id="recipe" name="recipe" rows="10" required>{{ post.recipe }}</textarea>
+            <small class="form-text text-muted">Enter each step on a new line.</small>
+        </div>
+        {% if post.image_url %}
+        <div class="mb-3">
+            <label>Current Image:</label><br>
+            <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 200px; max-height: 200px; margin-bottom: 10px;">
+        </div>
+        {% endif %}
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image (optional)</label>
+            <input type="file" name="image" id="image" class="form-control" accept="image/png, image/jpeg, image/gif">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Recipe</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                {% if post.image_url %}
+                <img src="{{ post.image_url }}" class="img-fluid rounded mb-3" alt="{{ post.title }}" style="max-width: 400px;">
+                {% else %}
+                <p class="text-muted text-center mt-3">No image provided.</p>
+                {% endif %}
+                <div class="card-body">
+                    <h1 class="card-title">{{ post.title }}</h1>
+                    <p class="card-text">{{ post.description }}</p>
+                    <h3 class="mt-4">Ингредиенты:</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for ingredient in post.ingredients.split('\n') %}
+                            <li class="list-group-item">{{ ingredient }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3 class="mt-4">Рецепт:</h3>
+                    <p class="card-text" style="white-space: pre-line;">{{ post.recipe }}</p>
+                    <a href="{{ url_for('update_recipe', post_id=post.id) }}" class="btn btn-warning mt-3">Edit Recipe</a>
+                    <form action="{{ url_for('delete_recipe', post_id=post.id) }}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete Recipe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

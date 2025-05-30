@@ -62,15 +62,23 @@
         <div class="row g-4">
             {% for post in posts %}
             <div class="col-md-4">
-                <div class="recipe-card card h-100 border-0 shadow-sm">
-                    <img src="{{ post.image_url }}"
-                         class="card-img-top recipe-image"
-                         alt="Паста Карбонара">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.description }}</p>
+                <a href="{{ url_for('recipe_detail', post_id=post.id) }}" class="text-decoration-none">
+                    <div class="recipe-card card h-100 border-0 shadow-sm">
+                        {% if post.image_url %}
+                        <img src="{{ post.image_url }}"
+                             class="card-img-top recipe-image"
+                             alt="{{ post.title }}">
+                        {% else %}
+                        <div class="card-img-top recipe-image d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                            <span class="text-muted">No image</span>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.description }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>

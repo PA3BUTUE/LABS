@@ -11,15 +11,25 @@
     {% for post in posts %}
     <div class="recipe-card">
         <!-- Используем URL изображения из базы данных -->
+        {% if post.image_url %}
         <div class="recipe-image" style="background-image: url('{{ post.image_url }}');"></div>
+        {% else %}
+        <div class="recipe-image d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+            <span class="text-muted">No image</span>
+        </div>
+        {% endif %}
         <div class="recipe-content">
             <h3 class="recipe-title">{{ post.title }}</h3>
             <div class="recipe-separator"></div>
             <p class="recipe-description">{{ post.description }}</p>
-            <a href="#" class="recipe-link">
+            <a href="{{ url_for('recipe_detail', post_id=post.id) }}" class="recipe-link">
                 Читать рецепт
                 <i class="fas fa-chevron-right"></i>
             </a>
+            <a href="{{ url_for('update_recipe', post_id=post.id) }}" class="btn btn-sm btn-warning mt-2">Edit</a>
+            <form action="{{ url_for('delete_recipe', post_id=post.id) }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-sm btn-danger mt-2" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete</button>
+            </form>
         </div>
     </div>
     {% endfor %}
